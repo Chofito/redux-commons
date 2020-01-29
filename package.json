@@ -1,0 +1,12 @@
+{
+  "name": "redux-commons",
+  "version": "1.0.0",
+  "description": "Some common reducers (not generic)",
+  "main": "index.js",
+  "repository": "https://github.com/Chofito/common-reducers",
+  "author": "Chofito <rjroblesq@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^4.0.5"
+  }
+}
