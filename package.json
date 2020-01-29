@@ -1,5 +1,5 @@
 {
-  "name": "redux-commons",
+  "name": "darksun-redux-commons",
   "version": "1.0.0",
   "description": "Some common reducers (not generic)",
   "main": "index.js",
