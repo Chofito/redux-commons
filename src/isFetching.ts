@@ -1,11 +1,11 @@
 type IsFetchingConfigurationType = {
-  started?: Array<string>,
-  succeed?: Array<string>,
-  failed?: Array<string>,
+  started?: Array<string>;
+  succeed?: Array<string>;
+  failed?: Array<string>;
 };
 
 type IsFetchingActionType = {
-  type: string,
+  type: string;
 };
 
 const isFetching = (configuration: IsFetchingConfigurationType) => (
@@ -17,14 +17,11 @@ const isFetching = (configuration: IsFetchingConfigurationType) => (
     return true;
   }
 
-  if (
-    (failed != null && failed.includes(action.type))
-    || (succeed != null && succeed.includes(action.type))) {
+  if ((failed != null && failed.includes(action.type)) || (succeed != null && succeed.includes(action.type))) {
     return false;
   }
 
   return state;
 };
-
 
 export default isFetching;

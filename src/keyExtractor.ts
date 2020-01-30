@@ -1,24 +1,20 @@
 type KeyExtractorConfigurationType = {
-  clear?: Array<string>,
-  set?: Array<string>,
-  extractionKey: string,
-  default: unknown,
+  clear?: Array<string>;
+  set?: Array<string>;
+  extractionKey: string;
+  default: unknown;
 };
 
 type KeyExtractorActionType = {
-  type: string,
-  payload: Object,
+  type: string;
+  payload: Object;
 };
 
 const keyExtractor = (configuration: KeyExtractorConfigurationType) => (
   state: unknown = configuration.default,
   action: KeyExtractorActionType,
 ): unknown => {
-  const {
-    clear,
-    set,
-    extractionKey,
-  } = configuration;
+  const { clear, set, extractionKey } = configuration;
   if (clear != null && clear.includes(action.type)) {
     return configuration.default;
   }
@@ -29,6 +25,5 @@ const keyExtractor = (configuration: KeyExtractorConfigurationType) => (
 
   return state;
 };
-
 
 export default keyExtractor;

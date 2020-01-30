@@ -1,9 +1,9 @@
 import { GenericActionType } from './types';
 
 type ToggleConfigurationType = {
-  turnedOn?: Array<string>,
-  turnedOff?: Array<string>,
-  default: boolean,
+  turnedOn?: Array<string>;
+  turnedOff?: Array<string>;
+  default: boolean;
 };
 
 const toggle = (configuration: ToggleConfigurationType) => (
@@ -21,6 +21,5 @@ const toggle = (configuration: ToggleConfigurationType) => (
 
   return state;
 };
-
 
 export default toggle;

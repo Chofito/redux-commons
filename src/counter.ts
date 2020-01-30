@@ -1,25 +1,18 @@
 type CounterConfigurationType = {
-  incremented?: Array<string>,
-  decremented?: Array<string>,
-  reset?: Array<string>,
+  incremented?: Array<string>;
+  decremented?: Array<string>;
+  reset?: Array<string>;
 };
 
 type CounterActionType = {
-  type: string,
+  type: string;
   payload: {
-    step: number,
-  },
+    step: number;
+  };
 };
 
-const counter = (configuration: CounterConfigurationType) => (
-  state: number = 0,
-  action: CounterActionType,
-): number => {
-  const {
-    incremented,
-    decremented,
-    reset,
-  } = configuration;
+const counter = (configuration: CounterConfigurationType) => (state: number = 0, action: CounterActionType): number => {
+  const { incremented, decremented, reset } = configuration;
 
   const { payload } = action;
 
@@ -41,6 +34,5 @@ const counter = (configuration: CounterConfigurationType) => (
 
   return state;
 };
-
 
 export default counter;

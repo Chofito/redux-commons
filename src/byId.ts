@@ -1,35 +1,37 @@
 import { IdType, SimpleReducerType } from './types';
 
 type ByIdConfigurationType = {
-  added?: Array<string>,
-  fetched?: Array<string>,
-  updated?: Array<string>,
-  updatedInBulk?: Array<string>,
-  removed?: Array<string>,
-  cleared?: Array<string>,
-  confirmed?: Array<string>,
-  addedToArrayAttribute?: Array<string>,
-  removedFromArrayAttribute?: Array<string>,
-  replacedInArrayAttribute?: Array<string>,
-  defaultAttributes?: Object,
-  idKey?: string,
-  cascade?: {[key: string]: string},
-  customBehavior?: SimpleReducerType, // state, action => newState
+  added?: Array<string>;
+  fetched?: Array<string>;
+  updated?: Array<string>;
+  updatedInBulk?: Array<string>;
+  removed?: Array<string>;
+  cleared?: Array<string>;
+  confirmed?: Array<string>;
+  addedToArrayAttribute?: Array<string>;
+  removedFromArrayAttribute?: Array<string>;
+  replacedInArrayAttribute?: Array<string>;
+  defaultAttributes?: Object;
+  idKey?: string;
+  cascade?: { [key: string]: string };
+  customBehavior?: SimpleReducerType; // state, action => newState
 };
 
 type ByIdActionType = {
-  type: string,
-  payload: IdType | {
-    id?: IdType,
-    entities?: { [key in IdType]: Object },
-    order?: Array<IdType>,
-    oldId?: IdType,
-    newId?: IdType,
-    key?: string,
-    oldValues?: any,
-    newValues?: any,
-    atIndex?: any,
-  }
+  type: string;
+  payload:
+    | IdType
+    | {
+        id?: IdType;
+        entities?: { [key in IdType]: Object };
+        order?: Array<IdType>;
+        oldId?: IdType;
+        newId?: IdType;
+        key?: string;
+        oldValues?: any;
+        newValues?: any;
+        atIndex?: any;
+      };
 };
 
 const byId = (configuration: ByIdConfigurationType) => (
@@ -57,13 +59,10 @@ const byId = (configuration: ByIdConfigurationType) => (
 
   if (payload != null) {
     if (
-      added != null
-      && added.includes(action.type)
-      && typeof payload === 'object'
-      && (
-        typeof payload[idKey] === 'number'
-        || typeof payload[idKey] === 'string'
-      )
+      added != null &&
+      added.includes(action.type) &&
+      typeof payload === 'object' &&
+      (typeof payload[idKey] === 'number' || typeof payload[idKey] === 'string')
     ) {
       return {
         ...state,
@@ -75,13 +74,7 @@ const byId = (configuration: ByIdConfigurationType) => (
     }
 
     if (updated != null && updated.includes(action.type)) {
-      if (
-        typeof payload === 'object'
-        && (
-          typeof payload[idKey] === 'number'
-            || typeof payload[idKey] === 'string'
-        )
-      ) {
+      if (typeof payload === 'object' && (typeof payload[idKey] === 'number' || typeof payload[idKey] === 'string')) {
         return {
           ...state,
           [payload[idKey]]: {
@@ -93,17 +86,13 @@ const byId = (configuration: ByIdConfigurationType) => (
     }
 
     if (updatedInBulk != null && updatedInBulk.includes(action.type)) {
-      if (
-        typeof payload === 'object'
-        && typeof payload.order !== 'undefined'
-        && payload.order.constructor === Array
-      ) {
+      if (typeof payload === 'object' && typeof payload.order !== 'undefined' && payload.order.constructor === Array) {
         const { order, ...attributes } = payload;
         const newState = {
           ...state,
         };
 
-        order.forEach((id) => {
+        order.forEach(id => {
           newState[id] = {
             ...state[id],
             ...attributes,
@@ -111,10 +100,7 @@ const byId = (configuration: ByIdConfigurationType) => (
         });
 
         return newState;
-      } else if (
-        typeof payload === 'object' &&
-          typeof payload.entities === 'object'
-      ) {
+      } else if (typeof payload === 'object' && typeof payload.entities === 'object') {
         const newState = {
           ...state,
         };
@@ -133,16 +119,12 @@ const byId = (configuration: ByIdConfigurationType) => (
     }
 
     if (fetched != null && fetched.includes(action.type)) {
-      if (
-        typeof payload === 'object'
-        && typeof payload.entities === 'object') {
+      if (typeof payload === 'object' && typeof payload.entities === 'object') {
         const newEntities = {};
-        Object.keys(payload.entities).forEach((id) => {
+        Object.keys(payload.entities).forEach(id => {
           newEntities[id] = {
             ...(defaultAttributes || {}),
-            ...(payload.entities || {})[
-              Number.isNaN(parseInt(id)) ? id : parseInt(id, 10)
-            ],
+            ...(payload.entities || {})[Number.isNaN(parseInt(id)) ? id : parseInt(id, 10)],
             isConfirmed: true,
           };
         });
@@ -157,10 +139,7 @@ const byId = (configuration: ByIdConfigurationType) => (
     if (removed != null && removed.includes(action.type)) {
       // TODO: handle payload object with id attribute
       // TODO: handle payload array
-      if (
-        typeof payload === 'number'
-        || typeof payload === 'string'
-      ) {
+      if (typeof payload === 'number' || typeof payload === 'string') {
         const newState = {
           ...state,
         };
@@ -174,11 +153,7 @@ const byId = (configuration: ByIdConfigurationType) => (
       if (typeof payload === 'object') {
         const { oldId, newId, ...extra } = payload;
 
-        if (
-          typeof oldId !== 'undefined'
-          && typeof newId !== 'undefined'
-          && typeof state[oldId] !== 'undefined'
-        ) {
+        if (typeof oldId !== 'undefined' && typeof newId !== 'undefined' && typeof state[oldId] !== 'undefined') {
           const newState = {
             ...state,
           };
@@ -194,7 +169,7 @@ const byId = (configuration: ByIdConfigurationType) => (
           return newState;
         }
         const newState = {};
-        Object.keys(state).forEach((key) => {
+        Object.keys(state).forEach(key => {
           newState[key] = {
             ...state[key],
             isConfirmed: true,
@@ -230,10 +205,7 @@ const byId = (configuration: ByIdConfigurationType) => (
             ...state,
             [id]: {
               ...state[id],
-              [key]: [
-                ...oldOrder,
-                ...order.filter(i => !oldOrder.includes(i)),
-              ],
+              [key]: [...oldOrder, ...order.filter(i => !oldOrder.includes(i))],
             },
           };
         }
@@ -271,9 +243,9 @@ const byId = (configuration: ByIdConfigurationType) => (
             ...state,
             [id]: {
               ...state[id],
-              [key]: oldOrder.map(oldValue => (oldValues.includes(oldValue)
-                ? newValues[oldValues.indexOf(oldValue)]
-                : oldValue)),
+              [key]: oldOrder.map(oldValue =>
+                oldValues.includes(oldValue) ? newValues[oldValues.indexOf(oldValue)] : oldValue,
+              ),
             },
           };
         }
@@ -292,13 +264,13 @@ const byId = (configuration: ByIdConfigurationType) => (
           const removedId = payload;
 
           const newState = {};
-          Object.keys(state).map(
-            elementKey => state[parseInt(elementKey, 10)],
-          ).forEach((element) => {
-            if (typeof element[fk] !== 'undefined' && element[fk] !== removedId) {
-              newState[element.id] = element;
-            }
-          });
+          Object.keys(state)
+            .map(elementKey => state[parseInt(elementKey, 10)])
+            .forEach(element => {
+              if (typeof element[fk] !== 'undefined' && element[fk] !== removedId) {
+                newState[element.id] = element;
+              }
+            });
 
           return newState;
         }
@@ -312,6 +284,5 @@ const byId = (configuration: ByIdConfigurationType) => (
 
   return customBehavior(state, action);
 };
-
 
 export default byId;

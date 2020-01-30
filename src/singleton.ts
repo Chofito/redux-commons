@@ -1,14 +1,13 @@
 type SingletonConfigurationType = {
-  clear?: Array<string>,
-  populate?: Array<string>,
-  update?: Array<string>,
+  clear?: Array<string>;
+  populate?: Array<string>;
+  update?: Array<string>;
 };
 
 type SingletonActionType = {
-  type: string,
-  payload: Object,
+  type: string;
+  payload: Object;
 };
-
 
 const singleton = (configuration: SingletonConfigurationType) => (
   state: Object | null = null,
@@ -32,6 +31,5 @@ const singleton = (configuration: SingletonConfigurationType) => (
 
   return state;
 };
-
 
 export default singleton;

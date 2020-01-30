@@ -1,24 +1,20 @@
 type NextPageConfigurationType = {
-  clear: Array<string>,
-  set: Array<string>,
-  nextPageKey?: string,
-  default: number,
+  clear: Array<string>;
+  set: Array<string>;
+  nextPageKey?: string;
+  default: number;
 };
 
 type NextPageActionType = {
-  type: string,
-  payload: Object | number,
+  type: string;
+  payload: Object | number;
 };
 
 const nextPage = (configuration: NextPageConfigurationType) => (
   state: number = configuration.default,
   action: NextPageActionType,
 ): number => {
-  const {
-    clear,
-    set,
-    nextPageKey = 'nextPage',
-  } = configuration;
+  const { clear, set, nextPageKey = 'nextPage' } = configuration;
   if (clear != null && clear.includes(action.type)) {
     return configuration.default;
   }
@@ -32,6 +28,5 @@ const nextPage = (configuration: NextPageConfigurationType) => (
 
   return state;
 };
-
 
 export default nextPage;

@@ -2,11 +2,30 @@
   "name": "darksun-redux-commons",
   "version": "1.0.0",
   "description": "Some common reducers (not generic)",
-  "main": "index.js",
+  "keywords": ["react", "redux", "commons"],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare" : "yarn build",
+    "prepublishOnly" : "yarn test && yarn lint",
+    "preversion" : "yarn lint",
+    "version": "yarn format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "files": ["lib/**/*"],
   "repository": "https://github.com/Chofito/common-reducers",
   "author": "Chofito <rjroblesq@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.5"
   }
 }

@@ -1,25 +1,24 @@
 import { IdType, ErrorType } from './types';
 
-
 type ErrorsConfigurationType = {
-  clear?: Array<string>,
-  idKey?: string,
-  populate?: Array<string>,
+  clear?: Array<string>;
+  idKey?: string;
+  populate?: Array<string>;
 };
 
 type ErrorsActionType = {
-  type: string,
+  type: string;
   payload: {
-    id: IdType,
-    objectId: IdType,
-  },
+    id: IdType;
+    objectId: IdType;
+  };
 };
 
 // TODO: Fix State Shape, should be ErrorType instead of any
 const errors = (configuration: ErrorsConfigurationType) => (
-  state: {[key in IdType]: any} = {},
+  state: { [key in IdType]: any } = {},
   action: ErrorsActionType,
-): {[key in IdType]: any} => {
+): { [key in IdType]: any } => {
   const { clear, populate, idKey = 'id' } = configuration;
   const { payload } = action;
   if (populate != null && populate.includes(action.type)) {
@@ -29,7 +28,6 @@ const errors = (configuration: ErrorsConfigurationType) => (
         [payload.objectId]: action.payload,
       };
     }
-
 
     if (typeof payload[idKey] === 'number' || typeof payload[idKey] === 'string') {
       return {
@@ -53,6 +51,5 @@ const errors = (configuration: ErrorsConfigurationType) => (
 
   return state;
 };
-
 
 export default errors;

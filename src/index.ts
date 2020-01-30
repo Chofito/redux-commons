@@ -1,7 +1,7 @@
 import byId from './byId';
 import counter from './counter';
 import error from './error';
-import errors  from './errors';
+import errors from './errors';
 import fetching from './fetching';
 import isFetching from './isFetching';
 import keyExtractor from './keyExtractor';
@@ -14,7 +14,6 @@ import substateMultiplexer from './substateMultiplexer';
 import toggle from './toggle';
 import withReplaceSubState from './withReplaceSubState';
 import withResetState from './withResetState';
-
 
 export {
   byId,

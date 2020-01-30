@@ -1,17 +1,13 @@
-import {
-  ErrorType,
-  MaybeErrorType,
-} from './types';
-
+import { ErrorType, MaybeErrorType } from './types';
 
 type ErrorConfigurationType = {
-  clear: Array<string>,
-  populate: Array<string>,
+  clear: Array<string>;
+  populate: Array<string>;
 };
 
 type ErrorActionType = {
-  type: string,
-  payload: ErrorType,
+  type: string;
+  payload: ErrorType;
 };
 
 const error = (configuration: ErrorConfigurationType) => (
@@ -29,6 +25,5 @@ const error = (configuration: ErrorConfigurationType) => (
 
   return state;
 };
-
 
 export default error;
