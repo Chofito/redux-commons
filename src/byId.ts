@@ -125,7 +125,6 @@ const byId = (configuration: ByIdConfigurationType) => (
           newEntities[id] = {
             ...(defaultAttributes || {}),
             ...(payload.entities || {})[Number.isNaN(parseInt(id)) ? id : parseInt(id, 10)],
-            isConfirmed: true,
           };
         });
 
@@ -162,7 +161,6 @@ const byId = (configuration: ByIdConfigurationType) => (
             ...newState[oldId],
             ...extra,
             id: newId,
-            isConfirmed: true,
           };
 
           delete newState[oldId];
@@ -172,7 +170,6 @@ const byId = (configuration: ByIdConfigurationType) => (
         Object.keys(state).forEach(key => {
           newState[key] = {
             ...state[key],
-            isConfirmed: true,
           };
         });
 
