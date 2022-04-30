@@ -124,7 +124,7 @@ const byId = (configuration: ByIdConfigurationType) => (
         Object.keys(payload.entities).forEach(id => {
           newEntities[id] = {
             ...(defaultAttributes || {}),
-            ...(payload.entities || {})[Number.isNaN(parseInt(id)) ? id : parseInt(id, 10)],
+            ...(payload.entities || {})[isNaN(parseInt(id)) ? id : parseInt(id, 10)],
           };
         });
 
@@ -175,6 +175,14 @@ const byId = (configuration: ByIdConfigurationType) => (
 
         return newState;
       }
+    } else if (typeof payload === 'object') {
+      const { id } = payload;
+      const newState = {
+        ...state,
+      };
+
+      delete newState[id];
+      return newState;
     }
 
     if (addedToArrayAttribute != null && addedToArrayAttribute.includes(action.type)) {
