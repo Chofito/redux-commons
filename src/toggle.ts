@@ -1,4 +1,4 @@
-import { GenericActionType } from './types';
+import { GenericAction } from './types';
 
 type ToggleConfigurationType = {
   turnedOn?: Array<string>;
@@ -8,7 +8,7 @@ type ToggleConfigurationType = {
 
 const toggle = (configuration: ToggleConfigurationType) => (
   state: boolean = false,
-  action: GenericActionType,
+  action: GenericAction,
 ): boolean => {
   const { turnedOn, turnedOff } = configuration;
   if (turnedOn != null && turnedOn.includes(action.type)) {

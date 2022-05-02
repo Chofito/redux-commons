@@ -1,17 +1,9 @@
-type CounterConfigurationType = {
-  incremented?: Array<string>;
-  decremented?: Array<string>;
-  reset?: Array<string>;
-};
+import { CounterAction, CounterConfiguration } from './types';
 
-type CounterActionType = {
-  type: string;
-  payload: {
-    step: number;
-  };
-};
-
-const counter = (configuration: CounterConfigurationType) => (state: number = 0, action: CounterActionType): number => {
+const counter = (configuration: CounterConfiguration) => (
+  state: number = 0,
+  action: CounterAction,
+): number => {
   const { incremented, decremented, reset } = configuration;
 
   const { payload } = action;

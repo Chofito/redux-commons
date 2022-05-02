@@ -1,17 +1,8 @@
-type SingletonConfigurationType = {
-  clear?: Array<string>;
-  populate?: Array<string>;
-  update?: Array<string>;
-};
+import { SingletonAction, SingletonConfiguration } from './types';
 
-type SingletonActionType = {
-  type: string;
-  payload: Object;
-};
-
-const singleton = (configuration: SingletonConfigurationType) => (
+const singleton = (configuration: SingletonConfiguration) => (
   state: Object | null = null,
-  action: SingletonActionType,
+  action: SingletonAction,
 ): Object | null => {
   const { clear, populate, update } = configuration;
   if (clear != null && clear.includes(action.type)) {

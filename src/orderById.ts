@@ -1,29 +1,13 @@
-import { IdType } from './types';
+import {
+  GenericObjectType,
+  OrderByIdAction,
+  OrderByIdConfiguration,
+} from './types';
 
-type OrderByIdConfigurationType = {
-  fetched?: Array<string>;
-  replaced?: Array<string>;
-  added?: Array<string>,
-  removed?: Array<string>,
-  changed?: Array<string>,
-  elementChanged?: Array<string>,
-  idKey?: string,
-  orderKey?: string,
-  elementKey?: string,
-  newElementKey?: string,
-};
-
-type OrderByIdActionType = {
-  type: string;
-  payload: {
-    order?: Array<IdType>;
-  };
-};
-
-const orderById = (configuration: OrderByIdConfigurationType) => (
-  state: { [key in IdType]: Array<IdType> } = {},
-  action: OrderByIdActionType,
-): { [key in IdType]: Array<IdType> } => {
+const orderById = (configuration: OrderByIdConfiguration) => (
+  state: GenericObjectType = {},
+  action: OrderByIdAction,
+): GenericObjectType => {
   const {
     fetched,
     replaced,
@@ -61,10 +45,7 @@ const orderById = (configuration: OrderByIdConfigurationType) => (
 
       return {
         ...state,
-        [objectId]: [
-          ...originalOrder,
-          toAdd,
-        ],
+        [objectId]: [...originalOrder, toAdd],
       };
     }
   }
@@ -104,7 +85,7 @@ const orderById = (configuration: OrderByIdConfigurationType) => (
 
       return {
         ...state,
-        [objectId]: originalOrder.map(i => i === toChange ? newValue : i),
+        [objectId]: originalOrder.map(i => (i === toChange ? newValue : i)),
       };
     }
   }

@@ -1,19 +1,8 @@
-type KeyExtractorConfigurationType = {
-  clear?: Array<string>;
-  set?: Array<string>;
-  extractionKey: string;
-  transform?: Function,
-  default: unknown;
-};
+import { KeyExtractorAction, KeyExtractorConfiguration } from './types';
 
-type KeyExtractorActionType = {
-  type: string;
-  payload: Object;
-};
-
-const keyExtractor = (configuration: KeyExtractorConfigurationType) => (
+const keyExtractor = (configuration: KeyExtractorConfiguration) => (
   state: unknown = configuration.default,
-  action: KeyExtractorActionType,
+  action: KeyExtractorAction,
   transform = _ => _,
 ): unknown => {
   const { clear, set, extractionKey } = configuration;

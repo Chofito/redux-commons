@@ -1,34 +1,21 @@
-import { IdType } from './types';
+import { FetchingAction, FetchingConfiguration, IdType } from './types';
 
-type FetchingConfigurationType = {
-  started?: Array<string>;
-  succeed?: Array<string>;
-  idKey?: string;
-  failed?: Array<string>;
-};
-
-type FetchingActionType = {
-  type: string;
-  payload:
-    | IdType
-    | {
-        id?: IdType;
-        objectId?: IdType;
-      };
-};
-
-const fetching = (configuration: FetchingConfigurationType) => (
+const fetching = (configuration: FetchingConfiguration) => (
   state: Array<IdType> = [],
-  action: FetchingActionType,
+  action: FetchingAction,
 ): Array<IdType> => {
   const { started, succeed, failed, idKey = 'id' } = configuration;
   if (started != null && started.includes(action.type)) {
-    if (typeof action.payload === 'number' || typeof action.payload === 'string') {
+    if (
+      typeof action.payload === 'number' ||
+      typeof action.payload === 'string'
+    ) {
       return [...state, action.payload];
     }
     if (
       typeof action.payload === 'object' &&
-      (typeof action.payload[idKey] === 'number' || typeof action.payload[idKey] === 'string')
+      (typeof action.payload[idKey] === 'number' ||
+        typeof action.payload[idKey] === 'string')
     ) {
       return [...state, action.payload[idKey]];
     }
@@ -38,7 +25,11 @@ const fetching = (configuration: FetchingConfigurationType) => (
 
   if (failed != null && failed.includes(action.type)) {
     const { payload } = action;
-    if (payload !== null && typeof payload === 'object' && typeof payload.objectId === 'number') {
+    if (
+      payload !== null &&
+      typeof payload === 'object' &&
+      typeof payload.objectId === 'number'
+    ) {
       return state.filter(id => id != payload.objectId);
     }
 

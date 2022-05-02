@@ -1,34 +1,9 @@
-import { IdType } from './types';
+import { IdType, OrderAction, OrderConfiguration } from './types';
 import { arrayMove } from './utils';
 
-export type OrderConfigurationType = {
-  added?: Array<string>;
-  fetched?: Array<string>;
-  replaced?: Array<string>;
-  removed?: Array<string>;
-  confirmed?: Array<string>;
-  cleared?: Array<string>;
-  sorted?: Array<string>;
-  idKey?: string;
-  preferPrepend?: boolean;
-};
-
-export type OrderActionType = {
-  type: string;
-  payload:
-    | IdType
-    | {
-        order?: Array<IdType>;
-        oldId?: IdType;
-        newId?: IdType;
-        oldIndex?: number;
-        newIndex?: number;
-      };
-};
-
-const order = (configuration: OrderConfigurationType) => (
+const order = (configuration: OrderConfiguration) => (
   state: Array<IdType> = [],
-  action: OrderActionType,
+  action: OrderAction,
 ): Array<IdType> => {
   const {
     added,

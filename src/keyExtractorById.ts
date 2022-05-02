@@ -1,21 +1,12 @@
-import { IdType } from './types';
+import {
+  IdType,
+  KeyExtractorByIdAction,
+  KeyExtractorByIdConfiguration,
+} from './types';
 
-type KeyExtractorByIdConfigurationType = {
-  clear?: Array<string>;
-  set?: Array<string>;
-  extractionKey?: string;
-  idKey?: string;
-  default: unknown;
-};
-
-type KeyExtractorByIdActionType = {
-  type: string;
-  payload: Object;
-};
-
-const keyExtractorById = (configuration: KeyExtractorByIdConfigurationType) => (
+const keyExtractorById = (configuration: KeyExtractorByIdConfiguration) => (
   state: { [key in IdType]: unknown } = {},
-  action: KeyExtractorByIdActionType,
+  action: KeyExtractorByIdAction,
 ): unknown => {
   const { clear, set, extractionKey, idKey = 'id' } = configuration;
   if (clear != null && clear.includes(action.type)) {

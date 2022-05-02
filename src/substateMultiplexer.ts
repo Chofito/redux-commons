@@ -1,35 +1,14 @@
 import { combineReducers } from 'redux';
 
-import { IdType } from './types';
-import { OrderActionType } from './order';
 import commonById from './byId';
 import commonOrder from './order';
 import commonSelected from './selected';
 
-type SubstateMultiplexerConfigurationType = {
-  added?: Array<string>;
-  fetched?: Array<string>;
-  removed?: Array<string>;
-  cleared?: Array<string>;
-  replaced?: Array<string>;
-  confirmed?: Array<string>;
-  sorted?: Array<string>;
-  preferPrepend?: boolean;
-  allDeselected?: Array<string>;
-  selected?: Array<string>;
-  rehydrated?: Array<string>;
-  idKey?: string;
-  reducer: Function;
-};
-
-type SubstateMultiplexerActionType = OrderActionType;
-
-export type SubstateMultiplexerStateType = {
-  byId: { [key in IdType]: Object };
-  order: Array<IdType>;
-  selected?: IdType;
-  substates: Object;
-};
+import {
+  SubstateMultiplexerActionType,
+  SubstateMultiplexerConfiguration,
+  SubstateMultiplexerState,
+} from './types';
 
 const initialState = {
   byId: {},
@@ -38,7 +17,9 @@ const initialState = {
   substates: {},
 };
 
-const substateMultiplexer = (configuration: SubstateMultiplexerConfigurationType) => {
+const substateMultiplexer = (
+  configuration: SubstateMultiplexerConfiguration,
+) => {
   const byIdOrderAndSelectedReducer = combineReducers({
     byId: commonById({
       added: configuration.added,
@@ -66,11 +47,14 @@ const substateMultiplexer = (configuration: SubstateMultiplexerConfigurationType
   });
 
   return (
-    state: SubstateMultiplexerStateType = initialState,
+    state: SubstateMultiplexerState = initialState,
     action: SubstateMultiplexerActionType,
-  ): SubstateMultiplexerStateType => {
+  ): SubstateMultiplexerState => {
     // Initial run of the reducer needs to return the reference to the initial state
-    if (configuration.rehydrated && configuration.rehydrated.includes(action.type)) {
+    if (
+      configuration.rehydrated &&
+      configuration.rehydrated.includes(action.type)
+    ) {
       return state;
     }
 
@@ -90,7 +74,8 @@ const substateMultiplexer = (configuration: SubstateMultiplexerConfigurationType
     // Select the first one if just added one and there was anything selected
     if (
       ((configuration.added && configuration.added.includes(action.type)) ||
-        (configuration.fetched && configuration.fetched.includes(action.type))) &&
+        (configuration.fetched &&
+          configuration.fetched.includes(action.type))) &&
       order.length > 0 &&
       selected === null
     ) {
@@ -140,7 +125,7 @@ const substateMultiplexer = (configuration: SubstateMultiplexerConfigurationType
 export default substateMultiplexer;
 
 export const reselectWithMultiplexer = (selector: Function): Function => (
-  multiplexerState: SubstateMultiplexerStateType,
+  multiplexerState: SubstateMultiplexerState,
   ...args: Array<unknown>
 ) => {
   const { selected, substates } = multiplexerState;
@@ -164,9 +149,14 @@ export const multipleReselectsWithMultiplexer = ({
 }): { [key: string]: Function } => {
   const wSelectors = {};
   Object.keys(selectors)
-    .filter(selectorName => selectorName !== 'default' && !excluded.includes(selectorName))
+    .filter(
+      selectorName =>
+        selectorName !== 'default' && !excluded.includes(selectorName),
+    )
     .forEach(selectorName => {
-      wSelectors[selectorName] = reselectWithMultiplexer(selectors[selectorName]);
+      wSelectors[selectorName] = reselectWithMultiplexer(
+        selectors[selectorName],
+      );
     });
 
   return wSelectors;

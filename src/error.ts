@@ -1,18 +1,12 @@
-import { ErrorType, MaybeErrorType } from './types';
+import {
+  ErrorAction,
+  ErrorConfiguration,
+  MaybeErrorType,
+} from './types';
 
-type ErrorConfigurationType = {
-  clear: Array<string>;
-  populate: Array<string>;
-};
-
-type ErrorActionType = {
-  type: string;
-  payload: ErrorType;
-};
-
-const error = (configuration: ErrorConfigurationType) => (
+const error = (configuration: ErrorConfiguration) => (
   state: MaybeErrorType = {},
-  action: ErrorActionType,
+  action: ErrorAction,
 ): MaybeErrorType => {
   const { clear, populate } = configuration;
   if (clear != null && clear.includes(action.type)) {

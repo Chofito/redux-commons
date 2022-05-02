@@ -2,19 +2,27 @@
   "name": "@darksun/redux-commons",
   "version": "1.0.4",
   "description": "Some common reducers (not generic)",
-  "keywords": ["react", "redux", "commons", "generic"],
+  "keywords": [
+    "react",
+    "redux",
+    "commons",
+    "generic"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
-    "prepare" : "yarn build",
-    "preversion" : "yarn lint",
+    "prepare": "yarn build",
+    "preversion": "yarn lint",
     "version": "yarn format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "watch": "tsc --watch"
   },
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "repository": "https://github.com/Chofito/darksun-redux-commons",
   "author": "Chofito <rjroblesq@gmail.com>",
   "license": "MIT",

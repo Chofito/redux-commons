@@ -1,4 +1,4 @@
-import { IdType, GenericActionType } from './types';
+import { IdType, GenericAction } from './types';
 
 export type SelectedConfigurationType = {
   selected?: Array<string>;
@@ -8,11 +8,17 @@ export type SelectedConfigurationType = {
 
 const selected = (configuration: SelectedConfigurationType) => (
   state: IdType | null = null,
-  action: GenericActionType,
+  action: GenericAction,
 ): IdType | null => {
   const { allDeselected } = configuration;
-  if (configuration.selected != null && configuration.selected.includes(action.type)) {
-    if (typeof action.payload === 'number' || typeof action.payload === 'string') {
+  if (
+    configuration.selected != null &&
+    configuration.selected.includes(action.type)
+  ) {
+    if (
+      typeof action.payload === 'number' ||
+      typeof action.payload === 'string'
+    ) {
       return action.payload;
     }
 

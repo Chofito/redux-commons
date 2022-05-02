@@ -1,8 +1,10 @@
-import { GenericActionType } from './types';
+import { GenericAction } from './types';
 
-const withResetState = (reducer: Function) => (resetActionTypes: Array<string>) => (
-  state: unknown = reducer(undefined, {}),
-  action: GenericActionType,
-) => (resetActionTypes.includes(action.type) ? reducer(undefined, {}) : reducer(state, action));
+const withResetState = (reducer: Function) => (
+  resetActionTypes: Array<string>,
+) => (state: unknown = reducer(undefined, {}), action: GenericAction) =>
+  resetActionTypes.includes(action.type)
+    ? reducer(undefined, {})
+    : reducer(state, action);
 
 export default withResetState;

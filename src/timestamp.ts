@@ -1,18 +1,8 @@
-type TimestampConfigurationType = {
-  clear: Array<string>;
-  set: Array<string>;
-  timestampKey?: string;
-  default: number;
-};
+import { TimestampAction, TimestampConfiguration } from './types';
 
-type TimestampActionType = {
-  type: string;
-  payload: Object | number;
-};
-
-const timestamp = (configuration: TimestampConfigurationType) => (
+const timestamp = (configuration: TimestampConfiguration) => (
   state: number = configuration.default,
-  action: TimestampActionType,
+  action: TimestampAction,
 ): number => {
   const { clear, set, timestampKey = 'timestamp' } = configuration;
   if (clear != null && clear.includes(action.type)) {

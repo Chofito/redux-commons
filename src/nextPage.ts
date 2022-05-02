@@ -1,18 +1,8 @@
-type NextPageConfigurationType = {
-  clear: Array<string>;
-  set: Array<string>;
-  nextPageKey?: string;
-  default: number;
-};
+import { NextPageAction, NextPageConfiguration } from './types';
 
-type NextPageActionType = {
-  type: string;
-  payload: Object | number;
-};
-
-const nextPage = (configuration: NextPageConfigurationType) => (
+const nextPage = (configuration: NextPageConfiguration) => (
   state: number = configuration.default,
-  action: NextPageActionType,
+  action: NextPageAction,
 ): number => {
   const { clear, set, nextPageKey = 'nextPage' } = configuration;
   if (clear != null && clear.includes(action.type)) {
